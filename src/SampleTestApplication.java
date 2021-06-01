@@ -1,3 +1,5 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -6,6 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import testcases.testcase_001;
+
 public class SampleTestApplication {
 
 	public static void main(String[] args) {
@@ -13,6 +17,12 @@ public class SampleTestApplication {
 		System.setProperty("webdriver.chrome.driver", "C:\\Users\\q1035564\\Documents\\My documents\\SeleniumJars\\chromedriver_win32 (1)\\chromedriver.exe");
 		
 		WebDriver driver = new ChromeDriver();
+		
+	    final Logger logger = LogManager.getLogger(SampleTestApplication.class);
+
+		logger.info("This is log4J info message");	
+		logger.debug("This is log4J debug message");
+		
 		/*driver.get("http://automationpractice.com/index.php");
 		driver.findElement(By.className("login")).click();
 		driver.manage().window().maximize();

@@ -1,29 +1,34 @@
 package testcases;
+import java.io.File;
+import java.io.IOException;
 
 
-import org.testng.annotations.Test;
-
-import org.testng.AssertJUnit;
-
-import java.util.Set;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
-
+import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
+import org.testng.ITestListener;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class testcase_001 {
+import com.sun.tools.sjavac.Log;
+
+public class testcase_001 implements ITestListener
+
+{
 	public WebDriver driver;
 	public String fname;
 	public String lname;
@@ -32,29 +37,54 @@ public class testcase_001 {
 	public String color;
 	public String optionValueForSize;
 	public String cost;
+	
+    private static final Logger logger = LogManager.getLogger(testcase_001.class);
 
-		
-
+	
   @BeforeClass
   public void launchBrowser() {
-	  System.setProperty("webdriver.chrome.driver", "C:\\Users\\q1035564\\Documents\\My documents\\SeleniumJars\\chromedriver_win32 (1)\\chromedriver.exe");
+	  System.setProperty("webdriver.chrome.driver", "C:\\Users\\q1035564\\Documents\\My documents\\SeleniumJars\\chromedriver_win32\\chromedriver.exe");
 		
 		driver = new ChromeDriver();
 		driver.get("http://automationpractice.com/index.php");
   }
 		
+  @Parameters({"runname"})
   @Test (priority=1)
-  public void clickonRegisterForEmail() {
+  //providing data for parameters or variable at run time using parameter annotation & @optional method
+  public void clickonRegisterForEmail(@Optional("optional@gmail.com") String runname) throws IOException {
 	  
 	  driver.findElement(By.className("login")).click();
 		driver.manage().window().maximize();
 		WebElement name = driver.findElement(By.id("email_create"));
-		name.sendKeys("wr312as0@gmail.com");
+		name.sendKeys(runname);
 		driver.findElement(By.name("SubmitCreate")).click();
+		//Logger.debug("log4j debug message");
+logger.info("This is log4J info message");	
+logger.debug("This is log4J debug message");
+		}
+  //Testing with @Dataprovider
+  @BeforeMethod
+  public void printingname() {
+	  System.out.println("Before Method");
   }
   
-  @Test(priority=2)
-  public void registrationProces() {
+/*  @DataProvider(name="runname")
+  public Object[] getdata(){
+	  return new Object[]
+			  {
+					  {"lavanya"},
+					  {"Kanth"}
+			  };
+  }*/
+  
+  
+  
+  //FileUtils.copyFile(screenshotFile, new File ("C:\\temp\\screenshot.png");
+  
+  
+ @Test(priority=2)
+  public void registrationProces() throws IOException {
 	  wait = new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='firstname']"))).sendKeys("Lavanya");
 		//driver.findElement(By.xpath("//div[@id='uniform-id_gender1']")).click();
@@ -74,15 +104,19 @@ public class testcase_001 {
 		//wait.until(ExpectedConditions.elementToBeSelected(By.xpath("//name[@id='id_state']")));
        Select s = new Select(driver.findElement(By.xpath("//select[@id='id_state']")));
        s.selectByValue("14");
-		driver.findElement(By.name("postcode")).sendKeys("49976");
+	   driver.findElement(By.name("postcode")).sendKeys("49976");
       Select country = new Select(driver.findElement(By.xpath("//select[@id='id_country']")));
-      s.selectByValue("21");
-		driver.findElement(By.name("phone_mobile")).sendKeys("1234567890");
+       s.selectByValue("21");
+	    driver.findElement(By.name("phone_mobile")).sendKeys("1234567890");
 		driver.findElement(By.name("alias")).sendKeys("ABCD");
 		driver.findElement(By.name("submitAccount")).click();
-
+		
+		File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(screenshotFile, new File("C:\\Users\\q1035564\\Documents\\My documents\\screenshot2.png"));
+  
   }
-@Test(priority=3)
+  
+/*@Test(priority=3)
 public void validateHomePageforName() {
 	 String fullname = fname.concat(" ").concat(lname);
 	 String nameOnHomepage = driver.findElement(By.xpath("//a[@title='View my customer account']/span")).getText();
@@ -159,7 +193,13 @@ public void validatingProductDetailsOnPaymentPage() {
     //validating cost
     String productCost = driver.findElement(By.xpath("//table[@id='cart_summary']/tbody/tr/td[4]/span/span")).getText();
     Assert.assertEquals(cost, productCost);
-}
+} */
+  
+ @AfterClass
+  public void closingBrowser()
+  {
+	  driver.close();
+  }
 
 
 
