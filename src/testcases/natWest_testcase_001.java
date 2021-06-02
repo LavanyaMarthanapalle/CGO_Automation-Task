@@ -45,7 +45,7 @@ public class natWest_testcase_001 {
 	  @Parameters({"runname"})
 	  @Test (priority=1)
 	  //providing data for parameters or variable at run time using parameter annotation & @optional method
-	  public void clickonRegisterForEmail(@Optional("LavanyaNatwest@gmail.com") String runname) throws IOException {
+	  public void clickonRegisterForEmail(@Optional("LavanyaNatwe3s1t81@gmail.com") String runname) throws IOException {
 		  
 		  driver.findElement(By.className("login")).click();
 			driver.manage().window().maximize();
@@ -157,15 +157,15 @@ public class natWest_testcase_001 {
 		driver.findElement(By.xpath("//a[@class='bankwire']")).click();
 		Thread.sleep(1500);
 		driver.findElement(By.xpath("//button[@class='button btn btn-default button-medium']")).click();
-		Thread.sleep(3000);
+		Thread.sleep(4000);
 
 	}
 
 	@Test(priority=7)
-	public void validatingProductDetailsOorderHistoryPage() throws InterruptedException {
+	public void validatingProductDetailsOnorderHistoryPage() throws InterruptedException {
 		//navigating to My account
 		driver.findElement(By.xpath("//a[@title='View my customer account']")).click();
-		Thread.sleep(1500);
+		Thread.sleep(2000);
 		//Navigate to orders history page
 		driver.findElement(By.xpath("//a[@title='Orders']")).click();
 		Thread.sleep(800);
@@ -204,10 +204,10 @@ public class natWest_testcase_001 {
 		
 		} 
 	
-	/* @AfterClass
+	@AfterClass
 	  public void closingBrowser()
 	  {
 		  driver.close();
-	  }*/
+	  }
 
 }

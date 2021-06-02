@@ -5,8 +5,10 @@
     <classes>
       <class name="testcases.natWest_testcase_001">
         <methods>
-          <include name="validatingProductDetailsOorderHistoryPage"/>
-          <include name="processingOrder"/>
+          <include name="clickonRegisterForEmail" invocation-numbers="0"/>
+          <include name="navigatingtoTShirt"/>
+          <include name="addProducttoCart"/>
+          <include name="registrationProces"/>
           <include name="launchBrowser"/>
           <include name="updatingTheName"/>
         </methods>
